@@ -1,6 +1,9 @@
 import React from 'react';
+import { useAuth } from '../context/AuthContext';
 
 export default function ProductCard({ product }) {
+  const { user } = useAuth();
+
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 h-full flex flex-col">
       {/* Product Image */}
@@ -24,9 +27,15 @@ export default function ProductCard({ product }) {
 
         {/* Price and Button */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-auto gap-4">
-          <span className="text-2xl font-bold text-accent">
-            €{product.price.toFixed(2).replace('.', ',')}
-          </span>
+          {user ? (
+            <span className="text-2xl font-bold text-accent">
+              €{product.price.toFixed(2).replace('.', ',')}
+            </span>
+          ) : (
+            <span className="text-lg font-semibold text-gray-500">
+              Prijs zichtbaar voor klanten
+            </span>
+          )}
           <button className="bg-primary hover:bg-primary/80 text-white py-2 px-4 rounded-lg transition-colors duration-200 font-semibold">
             Meer info
           </button>
